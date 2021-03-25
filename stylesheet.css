@@ -1,0 +1,90 @@
+html {
+	background-color: rgb(43, 43, 43);
+}
+
+body {
+	position: relative;
+	background-color: rgb(58, 58, 58);
+	height: 25em;
+	padding-top: 1em; /* I'm not sure what it does, if problems remove */
+}
+
+.calculator {
+	position: relative;
+	padding: 5px;
+	margin-top: 6em;
+	margin-left: auto;
+	margin-right: auto;
+	width: 21em;
+	border-radius: 8px;
+	background:rgb(0, 0, 0);
+	box-shadow: 0px 0px 30px rgb(255, 255, 255);;
+}
+
+.calc-top-container {
+	position: relative;
+	background-color: rgb(31, 31, 31);
+	width: auto;
+	height: 8em;
+	border-radius: 8px 8px 0px 0px;
+}
+
+.display {
+	position: absolute;
+	bottom: 0.83em;
+	background: rgb(179, 179, 179);
+	height: 5em;
+	width: 15.5em;
+	border-radius: 8px 2px 8px 2px;
+}
+
+.display p { /* display text content */
+	position: absolute;
+	bottom: 0.2em;
+	right: 0.2em;
+	font-size: 1.9em;
+}
+
+.calc-top-container button { /*AC Button */
+	position: absolute;
+	width: 6em;
+	height: 6em;
+	bottom: 1em;
+	right: 0;
+	border: none;
+	border-radius: 2px 5px 2px 5px;
+	background-color: rgb(219, 219, 219);
+}
+
+.calc-top-container button:hover {
+	background-color: rgb(64, 177, 177);
+}
+
+.calc-top-container button p { /* AC Button text content */
+	font-size: 2.6em;
+}
+
+.calc-button-container {
+	background-color: rgb(15, 15, 15);
+	border-radius: 0px 0px 8px 8px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.calc-button-container button {
+	width: 6em;
+	height: 6em;
+	border: none;
+	text-align: center;
+	margin: 2px; /* !!!Temporary way to center!!! */
+	border-radius: 2px;
+	background-color: rgb(219, 219, 219);
+}
+
+.calc-button-container button:hover {
+	background-color: rgb(64, 177, 177);
+}
+
+.calc-button-container p { /*Text content of buttons*/
+	font-size: 3.5em;
+}
