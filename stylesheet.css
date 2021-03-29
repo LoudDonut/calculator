@@ -88,3 +88,11 @@ body {
 .calc-button-container p { /*Text content of buttons*/
 	font-size: 3.5em;
 }
+
+.calc-button-container .keypad {
+	background-color: rgb(128, 127, 127);
+}
+
+.calc-button-container .keypad p {
+	color: rgb(0, 0, 0);
+}
