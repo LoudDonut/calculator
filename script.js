@@ -22,12 +22,70 @@ function operate(a, b) {
 }
 
 function convertOperate(a, b) {
-	console.log(a);
-	console.log(b);
 	let numA = parseInt(a);
 	let numB = parseInt(b);
 
 	return operate(numA, numB);
+}
+
+function falsifyOperators(operator) {
+	calcValues.operate = false;
+	calcValues.divide = false;
+	calcValues.multiply = false;
+	calcValues.subtract = false;
+	calcValues.add = false;
+	if (operator === "÷") {
+		calcValues.operate = true;
+		calcValues.divide = true;
+	}
+	else if (operator === "x") {
+		calcValues.operate = true;
+		calcValues.multiply = true;
+	}
+	else if (operator === "-") {
+		calcValues.operate = true;
+		calcValues.subtract = true;
+	}
+	else if (operator === "+") {
+		calcValues.operate = true;
+		calcValues.add = true;
+	}
+}
+
+function updateResults(numbers, numbersTwo) {
+	calcValues.result = convertOperate(numbers, numbersTwo);
+	calcValues.numbers = calcValues.result.toString();
+	calcValues.numbersTwo = "";
+}
+
+function clearValues() {
+	calcValues = {
+		numbers: "",
+		numbersTwo: "",
+		operator: "",
+		operate: false,
+		divide: false,
+		multiply: false,
+		subtract: false,
+		add: false,
+		result: null,
+	};
+}
+
+function decimalCheck(result) {
+	result = result.toString();
+	for (i = 0; i < result.length; i++) {
+		if (result[i] === ".") {
+			console.log(result[i]);
+			return true;
+		}
+	}
+	return false;
+}
+
+function display(toDisplay) {
+	const display = document.querySelector(".display > p");
+	display.textContent = toDisplay;
 }
 
 let calcValues = {
@@ -48,7 +106,12 @@ function main() {
 	numpad.forEach(button => {
 		button.addEventListener("click", (e) => {
 			let input = e.target.textContent;
-			if (!calcValues.operate) {
+			if (calcValues.result != null && !calcValues.operate) {
+				clearValues();
+				calcValues.numbers += input;
+				display.textContent = calcValues.numbers;
+			}
+			else if (!calcValues.operate) {
 				calcValues.numbers += input;
 				display.textContent = calcValues.numbers;
 			}
@@ -67,42 +130,58 @@ function main() {
 	operators.forEach(button => {
 		button.addEventListener("click", (e) => {
 			let input = e.target.textContent;
-			if (!calcValues.operate) {
+			if (!calcValues.operate) { //initial operator input
 				calcValues.operate = true;
 				if (input === "÷") {
-					calcValues.divide = true;
+					falsifyOperators(input);
 				}
 				else if (input === "x") {
-					calcValues.multiply = true;
+					falsifyOperators(input);
 				}
 				else if (input === "-") {
-					calcValues.subtract = true;
+					falsifyOperators(input);
 				}
 				else if (input === "+") {
-					calcValues.add = true;
+					falsifyOperators(input);
 				}
 			}
-			else {
-				if (input === "=") {
-					calcValues.result = convertOperate(calcValues.numbers, calcValues.numbersTwo);
+			else if (input === "=") {
+				updateResults(calcValues.numbers, calcValues.numbersTwo);
+				decimalCheck(calcValues.result)
+				display.textContent = calcValues.result;
+				falsifyOperators();
+			}
+			else if (calcValues.operate) { //when operating after using another operator
+				if (input === "÷") {
+					updateResults(calcValues.numbers, calcValues.numbersTwo);
+					decimalCheck(calcValues.result)
 					display.textContent = calcValues.result;
+					falsifyOperators(input);
+				}
+				else if (input === "x") {
+					updateResults(calcValues.numbers, calcValues.numbersTwo);
+					decimalCheck(calcValues.result)
+					display.textContent = calcValues.result;
+					falsifyOperators(input);
+				}
+				else if (input === "-") {
+					updateResults(calcValues.numbers, calcValues.numbersTwo);
+					decimalCheck(calcValues.result)
+					display.textContent = calcValues.result;
+					falsifyOperators(input);
+				}
+				else if (input === "+") {
+					updateResults(calcValues.numbers, calcValues.numbersTwo);
+					decimalCheck(calcValues.result)
+					display.textContent = calcValues.result;
+					falsifyOperators(input);
 				}
 			}
 		});
 	});
 	const clear = document.querySelector("#ac");
 	clear.addEventListener("click", () => {
-		calcValues = {
-			numbers: "",
-			numbersTwo: "",
-			operator: "",
-			operate: false,
-			divide: false,
-			multiply: false,
-			subtract: false,
-			add: false,
-			result: null,
-		};
+		clearValues();
 		display.textContent = "0";
 	});
 }
@@ -117,6 +196,10 @@ main();
 //display second set with each new input (check)
 //when = is pressed call operate and store the returned results (check)
 //display results (check)
-//store result as first set of numbers
-//if operator selected then continue with a second set
-//else reset and and start from the beginning
+//store result as first set of numbers (check)
+//if operator selected then continue with a second set (check)
+//else reset and and start from the beginning (check)
+
+//decimal count = after . start counting with a for loop
+//input = decimal count
+//if results has more then 8 decimals round the numbers
