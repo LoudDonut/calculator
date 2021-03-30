@@ -22,8 +22,8 @@ function operate(a, b) {
 }
 
 function convertOperate(a, b) {
-	let numA = parseInt(a);
-	let numB = parseInt(b);
+	let numA = parseFloat(a);
+	let numB = parseFloat(b);
 
 	return operate(numA, numB);
 }
@@ -76,7 +76,6 @@ function decimalCheck(result) {
 	result = result.toString();
 	for (i = 0; i < result.length; i++) {
 		if (result[i] === ".") {
-			console.log(result[i]);
 			return true;
 		}
 	}
@@ -85,7 +84,31 @@ function decimalCheck(result) {
 
 function display(toDisplay) {
 	const display = document.querySelector(".display > p");
+	if (toDisplay === Infinity) {
+		toDisplay = "https://en.wikipedia.org/wiki/Division_by_zero"
+		//Idea to deconstruct the calculator?
+	}
 	display.textContent = toDisplay;
+}
+
+function callFunctionsEquals() {
+	updateResults(calcValues.numbers, calcValues.numbersTwo);
+	decimalCheck(calcValues.result)
+	if (decimalCheck) {
+		calcValues.result = Math.round(calcValues.result * 1000000) / 1000000
+	}
+	display(calcValues.result);
+	falsifyOperators();
+}
+
+function callFunctionsOp(input) {
+	updateResults(calcValues.numbers, calcValues.numbersTwo);
+	decimalCheck(calcValues.result)
+	if (decimalCheck) {
+		calcValues.result = Math.round(calcValues.result * 1000000) / 1000000
+	}
+	display(calcValues.result);
+	falsifyOperators(input);
 }
 
 let calcValues = {
@@ -101,7 +124,6 @@ let calcValues = {
 };
 
 function main() {
-	const display = document.querySelector(".display > p");
 	const numpad = document.querySelectorAll(".keypad");
 	numpad.forEach(button => {
 		button.addEventListener("click", (e) => {
@@ -109,72 +131,67 @@ function main() {
 			if (calcValues.result != null && !calcValues.operate) {
 				clearValues();
 				calcValues.numbers += input;
-				display.textContent = calcValues.numbers;
+				display(calcValues.numbers);
 			}
 			else if (!calcValues.operate) {
 				calcValues.numbers += input;
-				display.textContent = calcValues.numbers;
+				display(calcValues.numbers);
 			}
 			else {
 				calcValues.numbersTwo += input;
-				display.textContent = calcValues.numbersTwo;
+				display(calcValues.numbersTwo);
 			}
 		});
 	});
 	const decPoint = document.querySelector("#decPoint");
 	decPoint.addEventListener("click", (e) => {
 		let input = e.target.textContent;
-		console.log(input);
+		let decimalExist;
+		if (calcValues.result != null && !calcValues.operate) {
+			clearValues();
+			calcValues.numbers += input;
+			display(calcValues.numbers);
+		}
+		else if (!calcValues.operate) {
+			decimalExist = decimalCheck(calcValues.numbers);
+			if (!decimalExist && !(calcValues.numbers === "")) { //START HERE
+				calcValues.numbers += input;
+				display(calcValues.numbers);
+			}  
+		}
+		else {
+			decimalExist = decimalCheck(calcValues.numbersTwo);
+			if (!decimalExist && !(calcValues.numbersTwo === "")) { //AND HERE
+				calcValues.numbersTwo += input;
+				display(calcValues.numbersTwo);
+			}  
+		}
 	});
 	const operators = document.querySelectorAll(".operators");
 	operators.forEach(button => {
 		button.addEventListener("click", (e) => {
 			let input = e.target.textContent;
-			if (!calcValues.operate) { //initial operator input
-				calcValues.operate = true;
+			if (calcValues.numbers.length > 0 &&
+				calcValues.numbersTwo.length === 0) { //initial operator input
+				falsifyOperators(input);
+			}
+			else if (input === "=" && calcValues.numbers.length > 0 &&
+					calcValues.numbersTwo.length > 0) {
+				callFunctionsEquals();
+			}
+			else if (calcValues.numbers.length > 0 &&
+					calcValues.numbersTwo.length > 0) { //when operating after using another operator
 				if (input === "÷") {
-					falsifyOperators(input);
+					callFunctionsOp(input);
 				}
 				else if (input === "x") {
-					falsifyOperators(input);
+					callFunctionsOp(input);
 				}
 				else if (input === "-") {
-					falsifyOperators(input);
+					callFunctionsOp(input);
 				}
 				else if (input === "+") {
-					falsifyOperators(input);
-				}
-			}
-			else if (input === "=") {
-				updateResults(calcValues.numbers, calcValues.numbersTwo);
-				decimalCheck(calcValues.result)
-				display.textContent = calcValues.result;
-				falsifyOperators();
-			}
-			else if (calcValues.operate) { //when operating after using another operator
-				if (input === "÷") {
-					updateResults(calcValues.numbers, calcValues.numbersTwo);
-					decimalCheck(calcValues.result)
-					display.textContent = calcValues.result;
-					falsifyOperators(input);
-				}
-				else if (input === "x") {
-					updateResults(calcValues.numbers, calcValues.numbersTwo);
-					decimalCheck(calcValues.result)
-					display.textContent = calcValues.result;
-					falsifyOperators(input);
-				}
-				else if (input === "-") {
-					updateResults(calcValues.numbers, calcValues.numbersTwo);
-					decimalCheck(calcValues.result)
-					display.textContent = calcValues.result;
-					falsifyOperators(input);
-				}
-				else if (input === "+") {
-					updateResults(calcValues.numbers, calcValues.numbersTwo);
-					decimalCheck(calcValues.result)
-					display.textContent = calcValues.result;
-					falsifyOperators(input);
+					callFunctionsOp(input);
 				}
 			}
 		});
@@ -182,24 +199,13 @@ function main() {
 	const clear = document.querySelector("#ac");
 	clear.addEventListener("click", () => {
 		clearValues();
-		display.textContent = "0";
+		display("0");;
 	});
 }
 
 main();
 
-//obtain input (check)
-//store the first set of numbers (check)
-//display set with each new input (check)
-//choose operator and store operator (check)
-//store second set of numbers (check)
-//display second set with each new input (check)
-//when = is pressed call operate and store the returned results (check)
-//display results (check)
-//store result as first set of numbers (check)
-//if operator selected then continue with a second set (check)
-//else reset and and start from the beginning (check)
-
-//decimal count = after . start counting with a for loop
-//input = decimal count
-//if results has more then 8 decimals round the numbers
+//Make sure if you press "." when there is no input then it will add a 0. as a shorthand instead of
+//pressing 0 then .    Go to "START HERE" for where to begin tackling this problem!
+//Backspace button
+//Add keyboard supports
