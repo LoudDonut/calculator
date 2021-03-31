@@ -45,19 +45,28 @@ body {
 	font-size: 1.9em;
 }
 
-.calc-top-container button { /*AC Button */
-	position: absolute;
+.calc-top-container button {
+	display: block;
+	position: relative;
+	top: 2em; 
+	left: 19.02em;
 	width: 6em;
-	height: 6em;
-	bottom: 1em;
-	right: 0;
-	border: none;
-	border-radius: 2px 5px 2px 5px;
-	background-color: rgb(219, 219, 219);
+	height: 3.5em;
+	border-style: none;
+	border-radius: 2px 5px 2px 2px;
+	background-color: #DDDDDD;
 }
 
 .calc-top-container button:hover {
 	background-color: rgb(64, 177, 177);
+}
+
+.ac {
+	margin-bottom: 3px;
+}
+
+.backspace {
+	margin-top: 3px;
 }
 
 .calc-top-container button p { /* AC Button text content */

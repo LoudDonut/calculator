@@ -149,22 +149,30 @@ function main() {
 		let decimalExist;
 		if (calcValues.result != null && !calcValues.operate) {
 			clearValues();
-			calcValues.numbers += input;
+			calcValues.numbers += "0.";
 			display(calcValues.numbers);
 		}
 		else if (!calcValues.operate) {
 			decimalExist = decimalCheck(calcValues.numbers);
-			if (!decimalExist && !(calcValues.numbers === "")) { //START HERE
+			if (!decimalExist && !(calcValues.numbers === "")) {
 				calcValues.numbers += input;
 				display(calcValues.numbers);
-			}  
+			} 
+			else if (calcValues.numbers === "") {
+				calcValues.numbers += "0.";
+				display(calcValues.numbers);
+			}
 		}
 		else {
 			decimalExist = decimalCheck(calcValues.numbersTwo);
-			if (!decimalExist && !(calcValues.numbersTwo === "")) { //AND HERE
+			if (!decimalExist && !(calcValues.numbersTwo === "")) {
 				calcValues.numbersTwo += input;
 				display(calcValues.numbersTwo);
-			}  
+			} 
+			else if (calcValues.numbersTwo === "") {
+				calcValues.numbersTwo += "0.";
+				display(calcValues.numbersTwo);
+			}
 		}
 	});
 	const operators = document.querySelectorAll(".operators");
@@ -176,7 +184,7 @@ function main() {
 				falsifyOperators(input);
 			}
 			else if (input === "=" && calcValues.numbers.length > 0 &&
-					calcValues.numbersTwo.length > 0) {
+				calcValues.numbersTwo.length > 0) {
 				callFunctionsEquals();
 			}
 			else if (calcValues.numbers.length > 0 &&
@@ -196,16 +204,38 @@ function main() {
 			}
 		});
 	});
-	const clear = document.querySelector("#ac");
+	const clear = document.querySelector(".ac");
 	clear.addEventListener("click", () => {
 		clearValues();
 		display("0");;
+	});
+	const backspace = document.querySelector(".backspace");
+	backspace.addEventListener("click", () => {
+		let numbersLength = calcValues.numbers.length - 1;
+		let numbersTwoLength = calcValues.numbersTwo.length -1;
+		if (calcValues.result != null && !calcValues.operate) {
+			clearValues();
+			display("0");
+		}
+		else if (!calcValues.operate && numbersLength < 1) {
+			calcValues.numbers = calcValues.numbers.slice(0, numbersLength);
+			display("0");
+		}
+		else if (!calcValues.operate) {
+			calcValues.numbers = calcValues.numbers.slice(0, numbersLength);
+			display(calcValues.numbers);
+		}
+		else if (calcValues.operate && numbersTwoLength < 1) {
+			calcValues.numbers = calcValues.numbers.slice(0, numbersLength);
+			display("0");
+		}
+		else {
+			calcValues.numbersTwo = calcValues.numbersTwo.slice(0, numbersTwoLength);
+			display(calcValues.numbersTwo);
+		}
 	});
 }
 
 main();
 
-//Make sure if you press "." when there is no input then it will add a 0. as a shorthand instead of
-//pressing 0 then .    Go to "START HERE" for where to begin tackling this problem!
-//Backspace button
 //Add keyboard supports
