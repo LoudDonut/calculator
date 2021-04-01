@@ -1,10 +1,10 @@
 html {
-	background-color: rgb(43, 43, 43);
+	background-color: #4d2b25;
 }
 
 body {
 	position: relative;
-	background-color: rgb(58, 58, 58);
+	background-color: #CCCCCC;
 	height: 25em;
 	padding-top: 1em; /* I'm not sure what it does, if problems remove */
 }
@@ -17,13 +17,13 @@ body {
 	margin-right: auto;
 	width: 21em;
 	border-radius: 8px;
-	background:rgb(0, 0, 0);
-	box-shadow: 0px 0px 30px rgb(255, 255, 255);;
+	background: #65dcb4;
+	box-shadow: -9px 7px 10px #272727;
 }
 
 .calc-top-container {
 	position: relative;
-	background-color: rgb(31, 31, 31);
+	background-color: #4d2b25;
 	width: auto;
 	height: 8em;
 	border-radius: 8px 8px 0px 0px;
@@ -31,11 +31,12 @@ body {
 
 .display {
 	position: absolute;
+	left: 0.1em;
 	bottom: 0.83em;
-	background: rgb(179, 179, 179);
+	background: #EEEEEE;
 	height: 5em;
 	width: 15.5em;
-	border-radius: 8px 2px 8px 2px;
+	border-radius: 8px 2px 2px 2px;
 }
 
 .display p { /* display text content */
@@ -54,11 +55,11 @@ body {
 	height: 3.5em;
 	border-style: none;
 	border-radius: 2px 5px 2px 2px;
-	background-color: #DDDDDD;
+	background-color: #EEEEEE;
 }
 
 .calc-top-container button:hover {
-	background-color: rgb(64, 177, 177);
+	background-color: #bffce6;
 }
 
 .ac {
@@ -74,7 +75,7 @@ body {
 }
 
 .calc-button-container {
-	background-color: rgb(15, 15, 15);
+	background-image: linear-gradient(#4d2b25 ,#734941);
 	border-radius: 0px 0px 8px 8px;
 	display: flex;
 	flex-wrap: wrap;
@@ -87,11 +88,11 @@ body {
 	text-align: center;
 	margin: 2px; /* !!!Temporary way to center!!! */
 	border-radius: 2px;
-	background-color: rgb(219, 219, 219);
+	background-color: #bffce6;
 }
 
 .calc-button-container button:hover {
-	background-color: rgb(64, 177, 177);
+	background-color: #EEEEEE;
 }
 
 .calc-button-container p { /*Text content of buttons*/
@@ -99,9 +100,17 @@ body {
 }
 
 .calc-button-container .keypad {
-	background-color: rgb(128, 127, 127);
+	background-color: #6effac;
 }
 
 .calc-button-container .keypad p {
 	color: rgb(0, 0, 0);
+}
+
+#decPoint {
+	border-radius: 2px 2px 2px 6px;
+}
+
+#add {
+	border-radius: 2px 2px 6px 2px;
 }
